@@ -10,7 +10,9 @@ class Node {
 }
 
 function getHeight (node) {}
+
 function generate_dot (node) {}
+
 function build_kdtree (points, depth = 0) {
    var n = points.length;
    var axis = depth % k;
@@ -46,8 +48,37 @@ function distanceSquared (point1, point2) {
    var distance = 0;
    for (var i = 0; i < k; i ++)
       distance += Math.pow (( point1 [i] - point2 [i]) , 2) ;
-      return Math.sqrt ( distance );
-   }
+   return Math.sqrt ( distance );
+}
    
 function closest_point_brute_force ( points , point ) {}
-function naive_closest_point (node , point , depth = 0, best = null ) {}
+
+function naive_closest_point (node, point, depth = 0, best = null ) {
+   if (node == null) {
+      return best;
+   }
+   var axis = depth % k;
+   let dis1 = distanceSquared(node.point, point);
+   let dis2;
+   console.log(depth + ": ");
+   if (best != null) {
+      dis2 = distanceSquared(best, point);
+      best = (dis1 < dis2)? node.point : best;
+      console.log(node.point + ": " + dis1);
+      console.log(best + ": " + dis2);
+      console.log(best + ": " + ((dis1 < dis2)? dis1 : dis2));
+   } else {
+      best = node.point;
+      console.log(best + ": " + dis1);
+   }
+   if (node.left == null && node.right == null) {
+      return best;
+   } else {
+      if (point[axis] < node.point[axis]) {
+         best = naive_closest_point(node.left, point, depth + 1, best);
+      } else {
+         best = naive_closest_point(node.right, point, depth + 1, best);
+      }
+   }
+   return best;
+}

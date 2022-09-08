@@ -13,6 +13,8 @@ function setup() {
       }
    }
    
+   //PUNTO 03
+   /*
    var data = [];
    for ( let i = 0; i < 12; i ++) {
       var x = Math.floor ( Math.random () * height );
@@ -27,4 +29,54 @@ function setup() {
    
    var root = build_kdtree ( data ) ;
    console.log ( root );
+   */
+   
+   //PUNTO 05
+   /*
+   var data = [
+      [40 ,70] ,
+      [70 ,130] ,
+      [90 ,40] ,
+      [110 , 100] ,
+      [140 ,110] ,
+      [160 , 100]
+   ];
+   var point = [140 ,90]; // query
+   for ( let i = 0; i < 6; i ++) {
+      fill (255 , 255 , 255) ;
+      circle (data[i][0], height - data[i][1], 7) ; // 200 -y para q se dibuje apropiadamente
+      textSize (8) ;
+      text (data[i][0] + ',' + data[i][1], data[i][0] + 5, height - data[i][1]);// 200 -y para q se dibuje apropiadamente
+   }
+   var root = build_kdtree ( data ) ;
+   console.log ( root );
+   
+   let best = null;
+   best = naive_closest_point(root, point, 0, best);
+   console.log(best);
+   */
+   
+   //PUNTO 06
+   var data = [
+      [40 ,70] ,
+      [70 ,130] ,
+      [90 ,40] ,
+      [110 , 100] ,
+      [140 ,110] ,
+      [160 , 100] ,
+      [150 , 30]
+   ];
+   var point = [140 ,90]; // query
+   for ( let i = 0; i < 7; i ++) {
+      fill (255 , 255 , 255) ;
+      circle (data[i][0], height - data[i][1], 7) ; // 200 -y para q se dibuje apropiadamente
+      textSize (8) ;
+      text (data[i][0] + ',' + data[i][1], data[i][0] + 5, height - data[i][1]);// 200 -y para q se dibuje apropiadamente
+   }
+   var root = build_kdtree ( data ) ;
+   console.log ( root );
+   
+   let best = null;
+   best = naive_closest_point(root, point, 0, best);
+   console.log(best);
 }
