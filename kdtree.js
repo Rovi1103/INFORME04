@@ -9,7 +9,15 @@ class Node {
    }
 }
 
-function getHeight (node) {}
+function getHeight (node) {
+   // caso base: el árbol vacío tiene una altura de -1
+   if (node == null) {
+      return -1;
+    }
+ 
+    // recurre al subárbol izquierdo y derecho y considera la altura máxima
+    return 1 + Math.max(getHeight(node.left), getHeight(node.right));
+}
 
 function generate_dot (node) {}
 
@@ -51,7 +59,25 @@ function distanceSquared (point1, point2) {
    return Math.sqrt ( distance );
 }
    
-function closest_point_brute_force ( points , point ) {}
+function closest_point_brute_force(points, point) {
+    var n = points.length;
+    var d;
+    var menor = -1;
+    var pto = null;
+    for(let i = 0; i < n; i++){
+        d = distanceSquared(point,points[i]);
+        if (menor >= 0){
+            if (d < menor){
+                pto = points[i];
+                menor = d;
+            }
+        }else{
+            menor = d;
+            pto = points[i];
+        }
+    }
+    return pto;
+}
 
 function naive_closest_point (node, point, depth = 0, best = null ) {
    if (node == null) {
@@ -137,4 +163,16 @@ function closest_point(node , point , depth = 0) {
          return (dis1 < disRight)? node.point : bestRight;
       }
    }
+}
+
+function range_query_circle(node, center, radio, queue, depth=0) {
+    if(node != null)
+    {
+        var dist = distanceSquared(node.point, center);
+        if (dist <= radio){
+            queue.push(node.point);
+        }
+        range_query_circle(node.left, center, radio, queue, depth+1);
+        range_query_circle(node.right, center, radio, queue, depth+1);
+    }
 }
