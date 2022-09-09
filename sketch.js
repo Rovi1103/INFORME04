@@ -67,7 +67,7 @@ function setup() {
       [150 , 30]
    ];
    var point = [140 ,90]; // query
-   for ( let i = 0; i < 7; i ++) {
+   for ( let i = 0; i < data.length; i ++) {
       fill (255 , 255 , 255) ;
       circle (data[i][0], height - data[i][1], 7) ; // 200 -y para q se dibuje apropiadamente
       textSize (8) ;
@@ -78,5 +78,8 @@ function setup() {
    
    let best = null;
    best = naive_closest_point(root, point, 0, best);
-   console.log(best);
+   console.log("Best naive closest: " + best);
+   best = null;
+   best = closest_point(root, point, 0);
+   console.log("Best closest: " + best);
 }

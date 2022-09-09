@@ -82,3 +82,59 @@ function naive_closest_point (node, point, depth = 0, best = null ) {
    }
    return best;
 }
+
+function closest_point(node , point , depth = 0) {
+   if (node == null) {
+      return null;
+   }
+   var axis = depth % k;
+   let dis1 = distanceSquared(node.point, point);
+   let disLeft;
+   let disRight;
+   let bestLeft;
+   let bestRight;
+
+   console.log(depth + ": ");
+   console.log(depth + ": point => " + node.point);
+   console.log(depth + ": dis1 => " + dis1);
+   if (node.left == null && node.right == null) {
+      console.log(depth + ": return => " + node.point);
+      return node.point;
+   } else {
+      disLeft = (node.left != null)? distanceSquared(node.left.point, point) : null;
+      console.log(depth + ": disLeft => " + disLeft);
+      disRight = (node.right != null)? distanceSquared(node.right.point, point) : null;
+      console.log(depth + ": disRight => " + disRight);
+      if (point[axis] < node.point[axis]) {
+         bestLeft = closest_point(node.left, point, depth + 1);
+         bestRight = (disLeft != null && disLeft > dis1)? closest_point(node.right, point, depth + 1) : null;
+      } else {
+         bestRight = closest_point(node.right, point, depth + 1);
+         bestLeft = (disRight != null && disRight > dis1)? closest_point(node.left, point, depth + 1) : null;
+      }
+   }
+   console.log(depth + ": bestLeft => " + bestLeft);
+   console.log(depth + ": bestRight => " + bestRight);
+   if (bestLeft == null && bestRight == null) {
+      console.log(depth + ": return => " + node.point);
+      return node.point;
+   } else if (bestLeft == null) {
+      disRight = distanceSquared(bestRight, point);
+      console.log(depth + ": disRight => " + disRight);
+      return (dis1 < disRight)? node.point : bestRight;
+   } else if (bestRight == null) {
+      disLeft = distanceSquared(bestLeft, point);
+      console.log(depth + ": disLeft => " + disLeft);
+      return (dis1 < disLeft)? node.point : bestLeft;
+   } else {
+      disLeft = distanceSquared(bestLeft, point);
+      console.log(depth + ": disLeft => " + disLeft);
+      disRight = distanceSquared(bestRight, point);
+      console.log(depth + ": disRight => " + disRight);
+      if (disLeft < disRight) {
+         return (dis1 < disLeft)? node.point : bestLeft;
+      } else {
+         return (dis1 < disRight)? node.point : bestRight;
+      }
+   }
+}
