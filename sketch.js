@@ -51,6 +51,9 @@ function setup() {
    var root = build_kdtree ( data ) ;
    console.log ( root );
    
+   var pto1 = closest_point_brute_force(data, point);
+   console.log("FzaBruta : " + pto1);
+   
    let best = null;
    best = naive_closest_point(root, point, 0, best);
    console.log(best);
@@ -75,6 +78,9 @@ function setup() {
    }
    var root = build_kdtree ( data ) ;
    console.log ( root );
+   
+   var pto1 = closest_point_brute_force(data, point);
+   console.log("FzaBruta : " + pto1);
    
    let best = null;
    best = naive_closest_point(root, point, 0, best);
