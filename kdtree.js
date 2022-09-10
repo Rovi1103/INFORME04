@@ -19,7 +19,55 @@ function getHeight (node) {
     return 1 + Math.max(getHeight(node.left), getHeight(node.right));
 }
 
-function generate_dot (node) {}
+function dibujarIzquierda(node) {
+
+   if (node.left == null) {
+      return "";
+   } else {
+       let texto = "";
+       if (node.left != null && node.right) {
+           texto = node.point[0] +", "+ node.point[1] + "-> " + node.left.point[0] +", "+ node.left.point[1] +";\n"
+           texto += dibujarIzquierda(node.left);
+           texto += dibujarDerecha(node.left);
+       }
+      return texto;
+   }
+};
+
+
+function dibujarDerecha(node) {
+
+   if (node.right == null) {
+      return "";
+   } else {
+       let texto = "";
+       if (node.right != null && node.left) {
+           texto = node.point[0] +", "+ node.point[1] + "-> " + node.right.point[0] +", "+ node.right.point[1] +";\n"
+           texto += dibujarDerecha(node.right);
+           texto += dibujarIzquierda(node.right);
+       }
+      return texto;
+   }
+};
+
+function generate_dot (node) {
+   var texto = "digraph G\n"
+               +"{\n"
+                  if (node.point != null) {
+                     texto += dibujarIzquierda(node);
+                     texto += dibujarDerecha(node);
+                  }
+                  texto += "\n}";
+
+   const doc = document.createElement("a");
+   const archivo = new Blob([texto], { type: 'application/msword' });
+   const url = URL.createObjectURL(archivo);
+   doc.href = url;
+   doc.download = "kd-tree.dot";
+   doc.click();
+   URL.revokeObjectURL(url);
+   return texto;
+}
 
 function build_kdtree (points, depth = 0) {
    var n = points.length;
